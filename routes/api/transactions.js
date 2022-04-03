@@ -8,12 +8,6 @@ const router = express.Router();
 // get all transaction list
 router.get('/all', authenticate, async (req, res, next) => {
   try {
-    const { error } = shemaTransactionAdd.validate(req.body);
-
-    if (error) {
-      throw new CreateError(400, error.message);
-    }
-
     const userId = req.user._id;
     const transactions = await Transaction.find({ owner: userId });
     return res.status(200).json({
