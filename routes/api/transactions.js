@@ -34,6 +34,9 @@ router.post('/create', authenticate, async (req, res, next) => {
       ...req.body,
       owner: userId,
     };
+    const isoDate = new Date(body.date);
+    body.month = isoDate.getMonth() + 1;
+    body.year = isoDate.getFullYear();
     let incomesSum = 0;
     let expensesSum = 0;
     const { type } = body;
@@ -79,6 +82,92 @@ router.post('/create', authenticate, async (req, res, next) => {
       status: 'success',
       code: 201,
       data: { transaction },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all categories transactions list
+router.get('/categories', authenticate, async (req, res, next) => {
+  try {
+    const categories = [
+      'main',
+      'food',
+      'car',
+      'me',
+      'children',
+      'house',
+      'education',
+      'leisure',
+      'other',
+    ];
+
+    return res.status(200).json({
+      status: 'success',
+      code: 200,
+      data: { categories: categories },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all  transactions list by date
+router.get('/statistics', authenticate, async (req, res, next) => {
+  try {
+    const { month, year } = req.query;
+    const userId = req.user._id;
+    const transactions = await Transaction.find({
+      owner: userId,
+      month: month,
+      year: year,
+    });
+    const sumCategories = {
+      main: 0,
+      food: 0,
+      car: 0,
+      me: 0,
+      children: 0,
+      house: 0,
+      education: 0,
+      leisure: 0,
+      other: 0,
+      incomes: 0,
+      expenses: 0,
+    };
+    const categories = [
+      'main',
+      'food',
+      'car',
+      'me',
+      'children',
+      'house',
+      'education',
+      'leisure',
+      'other',
+    ];
+
+    categories.forEach((categoryExp) => {
+      transactions.forEach((item) => {
+        if (item.category === categoryExp) {
+          sumCategories[categoryExp] += item.amount;
+        }
+      });
+    });
+
+    transactions.forEach((item) => {
+      if (item.type === 'incomes') {
+        sumCategories.incomes += item.amount;
+      } else if (item.type === 'expenses') {
+        sumCategories.expenses += item.amount;
+      }
+    });
+
+    return res.status(200).json({
+      status: 'success',
+      code: 200,
+      transactions: sumCategories,
     });
   } catch (error) {
     next(error);
