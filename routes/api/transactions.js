@@ -123,6 +123,8 @@ router.get('/statistics', authenticate, async (req, res, next) => {
       month: month,
       year: year,
     });
+    let expenses = 0;
+    let incomes = 0;
     const sumCategories = {
       main: 0,
       food: 0,
@@ -133,8 +135,6 @@ router.get('/statistics', authenticate, async (req, res, next) => {
       education: 0,
       leisure: 0,
       other: 0,
-      incomes: 0,
-      expenses: 0,
     };
     const categories = [
       'main',
@@ -158,9 +158,10 @@ router.get('/statistics', authenticate, async (req, res, next) => {
 
     transactions.forEach((item) => {
       if (item.type === 'incomes') {
-        sumCategories.incomes += item.amount;
-      } else if (item.type === 'expenses') {
-        sumCategories.expenses += item.amount;
+        incomes += item.amount;
+      }
+      if (item.type === 'expenses') {
+        expenses += item.amount;
       }
     });
 
@@ -168,6 +169,8 @@ router.get('/statistics', authenticate, async (req, res, next) => {
       status: 'success',
       code: 200,
       transactions: sumCategories,
+      expenses: expenses,
+      incomes: incomes,
     });
   } catch (error) {
     next(error);
