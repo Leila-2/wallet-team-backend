@@ -14,14 +14,14 @@
   "servers": [{ "url": "http://localhost:3001" }],
   "tags": [
     {
-      "name": "Auth",
+      "name": "Users",
       "description": "Authorization endpoints"
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/users/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User registration",
         "parameters": [],
         "security": [{ "Bearer": [] }],
@@ -57,8 +57,560 @@
           }
         }
       }
+    },
+
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Users login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "qwerty123",
+                    "description": "Password"
+                  },
+
+                  "email": {
+                    "type": "string",
+                    "example": "name@email.com",
+                    "description": "Email"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "token": "1q2-w3e-4r5-t6y"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invaid credincials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "error"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "401"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Invalid creadentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/users/logout": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Users logout",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "204": { "description": "Success" },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get current user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "user": {
+                          "email": "name@mail.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Invaid credincials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "error"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "401"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Invalid creadentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/transactions/all": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all transactions",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "success",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "transactions": [
+                          {
+                            "_id": {
+                              "$oid": "624b1ede072e35d45ac7ada4"
+                            },
+                            "type": "expenses",
+                            "amount": 1000,
+                            "date": "03.04.2022",
+                            "month": 3,
+                            "year": 2022,
+                            "comment": "",
+                            "balance": -1000,
+                            "incomesBalance": 0,
+                            "expensesBalance": 1000,
+                            "owner": {
+                              "$oid": "624985e4df72af244088e4f2"
+                            },
+                            "category": "food",
+                            "createdAt": {
+                              "$date": "2022-04-04T16:37:50.115Z"
+                            },
+                            "updatedAt": {
+                              "$date": "2022-04-04T16:37:50.115Z"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "description": "responses status",
+                "example": "error"
+              },
+              "code": {
+                "type": "string",
+                "description": "responses code",
+                "example": "403"
+              },
+              "message": {
+                "type": "string",
+                "description": "responses message",
+                "example": "Access denied"
+              }
+            }
+          },
+          "500": {
+            "description": "Iternal ServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/transactions/create": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Create new transaction",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["date", "category", "amount", "type"],
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "example": "Sat Nov 13 2021 12:51:02",
+                    "description": "date"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "present",
+                    "description": "category"
+                  },
+                  "comments": {
+                    "type": "string",
+                    "example": "grandma's present",
+                    "description": "comments"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": 10000,
+                    "description": "amount"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "income",
+                    "description": "type"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "status": "success",
+                        "code": 201,
+                        "data": {
+                          "transaction": {
+                            "type": "expenses",
+                            "amount": 1000,
+                            "date": "03.04.2022",
+                            "month": 3,
+                            "year": 2022,
+                            "comment": "",
+                            "balance": -1000,
+                            "incomesBalance": 0,
+                            "expensesBalance": 1000,
+                            "owner": "624985e4df72af244088e4f2",
+                            "category": "food",
+                            "createdAt": "2022-04-04T16:37:50.115Z",
+                            "updatedAt": "2022-04-04T16:37:50.115Z",
+                            "id": "624b1ede072e35d45ac7ada4"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/transactions/statistics/?{month}&{year}": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get statistic",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "path",
+            "description": "month request",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "description": "year request",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "statistic": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "transactions": {
+                          "main": 0,
+                          "food": 1000,
+                          "car": 0,
+                          "me": 0,
+                          "children": 0,
+                          "house": 0,
+                          "education": 0,
+                          "leisure": 0,
+                          "other": 0
+                        },
+                        "expenses": 1000,
+                        "incomes": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/transactions/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "categories": [
+                          "main",
+                          "food",
+                          "car",
+                          "me",
+                          "children",
+                          "house",
+                          "education",
+                          "leisure",
+                          "other"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
