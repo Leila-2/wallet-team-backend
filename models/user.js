@@ -14,6 +14,10 @@ const userSchema = Schema(
       required: [true, 'Email is required'],
       unique: true,
     },
+    totalbalance: {
+      type: Number,
+      default: 0,
+    },
     token: {
       type: String,
       default: null,
@@ -39,7 +43,7 @@ const validateEmail = Joi.object({
       tlds: { allow: ['com', 'ca', 'uk', 'ru', 'org', 'net'] },
     })
     .required(),
-})
+});
 
 const User = model('user', userSchema);
 
@@ -47,6 +51,6 @@ module.exports = {
   User,
   schems: {
     registet: usersRegisterValidation,
-    email: validateEmail
+    email: validateEmail,
   },
 };
