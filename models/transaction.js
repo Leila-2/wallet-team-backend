@@ -33,6 +33,12 @@ const transactionSchema = new Schema(
       type: SchemaTypes.String,
       default: new Date(),
     },
+    month: {
+      type: SchemaTypes.Number,
+    },
+    year: {
+      type: SchemaTypes.Number,
+    },
     comment: {
       type: SchemaTypes.String,
       default: '',
@@ -78,7 +84,7 @@ const Transaction = model('transaction', transactionSchema);
 const shemaTransactionAdd = Joi.object({
   type: Joi.string().required(),
   amount: Joi.number().min(0).required(),
-  date: Joi.date().iso().required(),
+  date: Joi.date().required(),
   comment: Joi.string().optional(),
   category: Joi.string().required(),
 });
