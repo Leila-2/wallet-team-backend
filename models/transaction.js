@@ -1,0 +1,89 @@
+const { Schema, model, SchemaTypes } = require('mongoose');
+const Joi = require('joi');
+
+const Category = {
+  expenses: [
+    'main',
+    'food',
+    'car',
+    'me',
+    'children',
+    'house',
+    'education',
+    'leisure',
+    'other',
+  ],
+  incomes: ['incomes'],
+};
+
+const transactionSchema = new Schema(
+  {
+    type: {
+      type: SchemaTypes.String,
+      enum: ['incomes', 'expenses'],
+      default: 'incomes',
+      required: true,
+    },
+    amount: {
+      type: SchemaTypes.Number,
+      min: 0,
+      required: true,
+    },
+    date: {
+      type: SchemaTypes.String,
+      default: new Date(),
+    },
+    comment: {
+      type: SchemaTypes.String,
+      default: '',
+    },
+    balance: {
+      type: SchemaTypes.Number,
+      default: 0,
+    },
+    incomesBalance: {
+      type: SchemaTypes.Number,
+      default: 0,
+    },
+    expensesBalance: {
+      type: SchemaTypes.Number,
+      default: 0,
+    },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
+      required: true,
+    },
+    category: {
+      type: SchemaTypes.String,
+      enum: [...Category.expenses, ...Category.incomes],
+      default: Category.incomes[0],
+    },
+  },
+  {
+    versionKey: false,
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret._id;
+        return ret;
+      },
+    },
+    toObject: { virtuals: true },
+  }
+);
+
+const Transaction = model('transaction', transactionSchema);
+const shemaTransactionAdd = Joi.object({
+  type: Joi.string().required(),
+  amount: Joi.number().min(0).required(),
+  date: Joi.date().iso().required(),
+  comment: Joi.string().optional(),
+  category: Joi.string().required(),
+});
+
+module.exports = {
+  Transaction,
+  shemaTransactionAdd,
+};

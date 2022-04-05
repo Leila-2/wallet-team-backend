@@ -5,6 +5,7 @@ require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const authRouter = require('./routes/api/auth');
+const transtactionRouter = require('./routes/api/transactions');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
   swaggerUi.setup(swaggerDocument, options)
 );
 app.use('/api/users', authRouter);
+app.use('/api/transactions', transtactionRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
