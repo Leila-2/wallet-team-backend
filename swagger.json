@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/users/register": {
+    "/users/signup": {
       "post": {
         "tags": ["Users"],
         "summary": "User registration",
