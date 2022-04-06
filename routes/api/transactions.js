@@ -23,6 +23,12 @@ router.get(
   controllerWrapper(transactions.statistics)
 );
 
+router.get(
+  '/:transactionId',
+  authenticate,
+  controllerWrapper(transactions.getById)
+);
+
 // delete transaction by id
 router.delete(
   '/:transactionId',
