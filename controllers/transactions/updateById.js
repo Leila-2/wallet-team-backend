@@ -1,5 +1,6 @@
-const { Transaction } = require('../../models/transaction');
-const CreateError = require('http-errors');
+const { Transaction } = require("../../models/transaction");
+const CreateError = require("http-errors");
+const { totalBalance } = require("../../middlewares");
 
 const updateById = async (req, res) => {
   const userId = req.user._id;
@@ -8,16 +9,15 @@ const updateById = async (req, res) => {
     { ...req.body },
     { new: true }
   );
-
-  console.log(req.body, 'req');
-  console.log(transaction, 'transaction');
-
+  const balance = await totalBalance(null, userId);
   if (transaction) {
-    return res
-      .status(200)
-      .json({ status: 'success', code: 200, data: { transaction } });
+    return res.status(200).json({
+      status: "success",
+      code: 200,
+      data: { totalBalance: balance, transaction },
+    });
   }
-  throw new CreateError(404, 'Not found');
+  throw new CreateError(404, "Not found");
 };
 
 module.exports = updateById;

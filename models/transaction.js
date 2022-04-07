@@ -1,27 +1,27 @@
-const { Schema, model, SchemaTypes } = require('mongoose');
-const Joi = require('joi');
+const { Schema, model, SchemaTypes } = require("mongoose");
+const Joi = require("joi");
 
 const Category = {
   expenses: [
-    'main',
-    'food',
-    'car',
-    'me',
-    'children',
-    'house',
-    'education',
-    'leisure',
-    'other',
+    "main",
+    "food",
+    "car",
+    "me",
+    "children",
+    "house",
+    "education",
+    "leisure",
+    "other",
   ],
-  incomes: ['incomes'],
+  incomes: ["incomes"],
 };
 
 const transactionSchema = new Schema(
   {
     type: {
       type: SchemaTypes.String,
-      enum: ['incomes', 'expenses'],
-      default: 'incomes',
+      enum: ["incomes", "expenses"],
+      default: "incomes",
       required: true,
     },
     amount: {
@@ -41,23 +41,11 @@ const transactionSchema = new Schema(
     },
     comment: {
       type: SchemaTypes.String,
-      default: '',
-    },
-    balance: {
-      type: SchemaTypes.Number,
-      default: 0,
-    },
-    incomesBalance: {
-      type: SchemaTypes.Number,
-      default: 0,
-    },
-    expensesBalance: {
-      type: SchemaTypes.Number,
-      default: 0,
+      default: "",
     },
     owner: {
       type: SchemaTypes.ObjectId,
-      ref: 'user',
+      ref: "user",
       required: true,
     },
     category: {
@@ -80,7 +68,7 @@ const transactionSchema = new Schema(
   }
 );
 
-const Transaction = model('transaction', transactionSchema);
+const Transaction = model("transaction", transactionSchema);
 const shemaTransactionAdd = Joi.object({
   type: Joi.string().required(),
   amount: Joi.number().min(0).required(),
