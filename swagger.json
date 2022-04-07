@@ -293,7 +293,7 @@
                       "type": "object",
                       "description": "responses data",
                       "example": {
-                        "totalBalance": "1500",
+                        "totalBalance": 1500,
                         "transactions": [
                           {
                             "_id": {
@@ -445,7 +445,7 @@
                             "updatedAt": "2022-04-04T16:37:50.115Z",
                             "id": "624b1ede072e35d45ac7ada4"
                           },
-                          "totalBalance": "1500"
+                          "totalBalance": 1500
                         }
                       }
                     }
@@ -677,6 +677,7 @@
                         "status": "success",
                         "code": 200,
                         "data": {
+                          "totalBalance": 1500,
                           "transaction": {
                             "type": "incomes",
                             "amount": 140,
@@ -788,7 +789,7 @@
                             "updatedAt": "2022-04-06T18:17:28.495Z",
                             "id": "624c0c165683a159114b4d27"
                           },
-                          "totalBalance": "1500"
+                          "totalBalance": 1500
                         }
                       }
                     }
