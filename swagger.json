@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3001" }],
+  "servers": [{ "url": "https://wallet-team-backend.herokuapp.com/" }],
   "tags": [
     {
       "name": "Users",
@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/users/register": {
+    "/users/signup": {
       "post": {
         "tags": ["Users"],
         "summary": "User registration",
@@ -375,7 +375,7 @@
                 "properties": {
                   "date": {
                     "type": "string",
-                    "example": "Sat Nov 13 2021 12:51:02",
+                    "example": "MM/DD/YYYY",
                     "description": "date"
                   },
                   "category": {
@@ -528,6 +528,294 @@
                         "expenses": 1000,
                         "incomes": 0
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/transactions/:transactionId": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "status": "success",
+                        "code": 200,
+                        "data": {
+                          "transaction": {
+                            "type": "incomes",
+                            "amount": 140,
+                            "date": "04.05.2022",
+                            "month": 4,
+                            "year": 2020,
+                            "comment": "",
+                            "balance": 327,
+                            "incomesBalance": 327,
+                            "expensesBalance": 0,
+                            "owner": "624985e4df72af244088e4f2",
+                            "category": "incomes",
+                            "createdAt": "2022-04-05T09:29:58.522Z",
+                            "updatedAt": "2022-04-06T18:17:28.495Z",
+                            "id": "624c0c165683a159114b4d27"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Invaid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "error"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "401"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Invalid creadentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Transactions"],
+        "summary": "Update transaction",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "status": "success",
+                        "code": 200,
+                        "data": {
+                          "transaction": {
+                            "type": "incomes",
+                            "amount": 140,
+                            "date": "04.05.2022",
+                            "month": 4,
+                            "year": 2020,
+                            "comment": "",
+                            "balance": 327,
+                            "incomesBalance": 327,
+                            "expensesBalance": 0,
+                            "owner": "624985e4df72af244088e4f2",
+                            "category": "incomes",
+                            "createdAt": "2022-04-05T09:29:58.522Z",
+                            "updatedAt": "2022-04-06T18:17:28.495Z",
+                            "id": "624c0c165683a159114b4d27"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Invaid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "error"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "401"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Invalid creadentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Iternal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete transaction by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "200"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "status": "success",
+                        "code": 200,
+                        "data": {
+                          "transaction": {
+                            "type": "incomes",
+                            "amount": 140,
+                            "date": "04.05.2022",
+                            "month": 4,
+                            "year": 2020,
+                            "comment": "",
+                            "balance": 327,
+                            "incomesBalance": 327,
+                            "expensesBalance": 0,
+                            "owner": "624985e4df72af244088e4f2",
+                            "category": "incomes",
+                            "createdAt": "2022-04-05T09:29:58.522Z",
+                            "updatedAt": "2022-04-06T18:17:28.495Z",
+                            "id": "624c0c165683a159114b4d27"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Invaid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "error"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "401"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Invalid creadentials"
                     }
                   }
                 }
