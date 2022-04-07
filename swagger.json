@@ -81,6 +81,11 @@
                     "type": "string",
                     "example": "name@email.com",
                     "description": "Email"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "example": "https://s.gravatar.com/avatar/c49f65abb0687503ebca57c48f3a3304?s=100&r=x&d=monsterid",
+                    "description": "avatarURL"
                   }
                 }
               }
@@ -213,6 +218,10 @@
                       "example": {
                         "user": {
                           "email": "name@mail.com"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "avatarURL": "https://s.gravatar.com/avatar/c49f65abb0687503ebca57c48f3a3304?s=100&r=x&d=monsterid"
                         }
                       }
                     }
