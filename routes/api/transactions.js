@@ -23,6 +23,13 @@ router.get(
   controllerWrapper(transactions.statistics)
 );
 
+
+router.put(
+  '/:transactionId',
+  authenticate,
+  controllerWrapper(transactions.updateById)
+  );
+
 router.get(
   '/:transactionId',
   authenticate,
