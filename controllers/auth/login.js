@@ -17,6 +17,8 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  const { avatarURL } = user;
+
   if (!user) {
     throw new createError(401, 'Email or password is wrong');
   }
@@ -36,6 +38,7 @@ const login = async (req, res) => {
     user: {
       token,
       email,
+      avatarURL,
     },
   });
 };
