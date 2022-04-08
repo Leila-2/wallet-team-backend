@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https://wallet-team-backend.herokuapp.com/" }],
+  "servers": [{ "url": "https://wallet-team-backend.herokuapp.com/api" }],
   "tags": [
     {
       "name": "Users",
