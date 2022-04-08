@@ -17,6 +17,8 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  const name = user.name;
+
   const { avatarURL } = user;
 
   if (!user) {
@@ -39,6 +41,7 @@ const login = async (req, res) => {
       token,
       email,
       avatarURL,
+      name,
     },
   });
 };

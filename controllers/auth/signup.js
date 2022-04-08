@@ -11,7 +11,7 @@ const signup = async (req, res) => {
     throw new createError(400, error.message);
   }
 
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -28,6 +28,7 @@ const signup = async (req, res) => {
 
   await User.create({
     email,
+    name,
     password: hashPassword,
     avatarURL,
   });
@@ -35,6 +36,8 @@ const signup = async (req, res) => {
   res.status(201).json({
     user: {
       email,
+      name,
+      avatarURL,
     },
   });
 };
