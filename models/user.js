@@ -14,6 +14,10 @@ const userSchema = Schema(
       required: [true, 'Email is required'],
       unique: true,
     },
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+    },
     totalbalance: {
       type: Number,
       default: 0,
@@ -22,6 +26,7 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+
     avatarURL: {
       type: String,
       default: '',
@@ -32,6 +37,7 @@ const userSchema = Schema(
 
 const usersRegisterValidation = Joi.object({
   password: Joi.string().min(6).max(12).required(),
+  name: Joi.string(),
   email: Joi.string()
     .email({
       minDomainSegments: 2,
