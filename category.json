@@ -1,13 +1,36 @@
 {
   "categories": [
-    "main",
-    "food",
-    "car",
-    "me",
-    "children",
-    "house",
-    "education",
-    "leisure",
-    "other"
+    {
+      "title": "Основной",
+      "value": "main"
+    },
+    {
+      "title": "Еда",
+      "value": "food"
+    },
+    {
+      "title": "Авто",
+      "value": "car"
+    },
+    {
+      "title": "Развитие",
+      "value": "me"
+    },
+    {
+      "title": "Дети",
+      "value": "children"
+    },
+    {
+      "title": "Дом",
+      "value": "house"
+    },
+    {
+      "title": "Образование",
+      "value": "education"
+    },
+    {
+      "title": "Остальные",
+      "value": "other"
+    }
   ]
 }
