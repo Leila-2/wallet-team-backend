@@ -29,6 +29,10 @@ const transactionSchema = new Schema(
       min: 0,
       required: true,
     },
+    balance: {
+      type: SchemaTypes.Number,
+      min: 0,
+    },
     date: {
       type: SchemaTypes.String,
       default: new Date(),
