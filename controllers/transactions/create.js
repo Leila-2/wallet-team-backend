@@ -4,7 +4,6 @@ const {
   Transaction,
 } = require("../../models/transaction");
 const { totalBalance } = require("../../middlewares");
-
 const create = async (req, res) => {
   const { error } = shemaTransactionAdd.validate(req.body);
 
@@ -21,10 +20,13 @@ const create = async (req, res) => {
   body.month = isoDate.getMonth() + 1;
   body.year = isoDate.getFullYear();
 
-  const balance = await totalBalance(body);
+  const prevBalance = await totalBalance(body);
+
+  body.balance = prevBalance;
 
   const transaction = await Transaction.create(body);
 
+  const balance = await totalBalance(body);
   return res.status(201).json({
     status: "success",
     code: 201,
