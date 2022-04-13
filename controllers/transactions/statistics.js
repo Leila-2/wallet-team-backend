@@ -18,7 +18,6 @@ const all = async (req, res) => {
     children: 0,
     house: 0,
     education: 0,
-    leisure: 0,
     other: 0,
   };
 
