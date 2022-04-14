@@ -1,4 +1,5 @@
-const { Transaction } = require('../../models/transaction');
+const { Transaction } = require("../../models/transaction");
+const fs = require("fs");
 
 const all = async (req, res) => {
   const { month, year } = req.query;
@@ -21,40 +22,7 @@ const all = async (req, res) => {
     other: 0,
   };
 
-  const categories = [
-    {
-      title: 'Основной',
-      value: 'main',
-    },
-    {
-      title: 'Еда',
-      value: 'food',
-    },
-    {
-      title: 'Авто',
-      value: 'car',
-    },
-    {
-      title: 'Развитие',
-      value: 'me',
-    },
-    {
-      title: 'Дети',
-      value: 'children',
-    },
-    {
-      title: 'Дом',
-      value: 'house',
-    },
-    {
-      title: 'Образование',
-      value: 'education',
-    },
-    {
-      title: 'Остальные',
-      value: 'other',
-    },
-  ];
+  const { categories } = JSON.parse(fs.readFileSync("category.json", "utf-8"));
 
   categories.forEach((categoryExp) => {
     transactions.forEach((item) => {
@@ -65,16 +33,16 @@ const all = async (req, res) => {
   });
 
   transactions.forEach((item) => {
-    if (item.type === 'incomes') {
+    if (item.type === "incomes") {
       incomes += item.amount;
     }
-    if (item.type === 'expenses') {
+    if (item.type === "expenses") {
       expenses += item.amount;
     }
   });
 
   return res.status(200).json({
-    status: 'success',
+    status: "success",
     code: 200,
     transactions: sumCategories,
     expenses: expenses,

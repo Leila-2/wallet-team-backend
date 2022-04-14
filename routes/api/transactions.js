@@ -23,25 +23,11 @@ router.get(
   controllerWrapper(transactions.statistics)
 );
 
-// change  transaction by id
-router.put(
-  "/:transactionId",
-  authenticate,
-  controllerWrapper(transactions.updateById)
-);
-
 // get  transaction by id
 router.get(
   "/:transactionId",
   authenticate,
   controllerWrapper(transactions.getById)
-);
-
-// delete transaction by id
-router.delete(
-  "/:transactionId",
-  authenticate,
-  controllerWrapper(transactions.remove)
 );
 
 module.exports = router;
